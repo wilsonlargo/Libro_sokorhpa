@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f1ed">
+  <meta name="description" content="Prototipo interactivo de lectura del Libro del Territorio Yukpa de Sokorhpa. Primeras quince páginas.">
+  <title>Tejiendo Territorio | Sokorhpa — Libro interactivo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="site-identity" href="#inicio" aria-label="Ir a la portada del libro" id="homeLink">
+        <span class="identity-mark" aria-hidden="true"><span class="mark-line"></span><span class="mark-dot"></span><span class="mark-line reverse"></span></span>
+        <span class="identity-text"><strong>SOKORHPA</strong><small>LIBRO DEL TERRITORIO YUKPA</small></span>
+      </a>
+      <div class="header-actions">
+        <span class="prototype-label"><span class="status-dot"></span> Prototipo de lectura</span>
+        <button class="header-button" type="button" id="resourcesButton" aria-haspopup="dialog" aria-controls="resourcesDialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 16-5.5-5.5L5 21"/></svg>
+          <span>Archivo visual</span><span class="resource-number">12</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="inicio">
+      <div class="intro">
+        <div>
+          <p class="eyebrow">LIBRO TERRITORIAL · MUESTRA DIGITAL</p>
+          <h1>Tejiendo Territorio <span class="title-sub">/ Memorias, saberes y vida comunitaria</span></h1>
+        </div>
+        <div class="intro-badge">Páginas 01—15 <span>de la maqueta editorial</span></div>
+      </div>
+
+      <section class="reader" aria-label="Lector del libro interactivo">
+        <div class="reader-surround">
+          <button type="button" class="reader-arrow reader-arrow--previous" id="previousArrow" aria-label="Pasar a las páginas anteriores" title="Páginas anteriores">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+
+          <div class="book-shell is-cover" id="bookShell">
+            <div class="book-stage" id="bookStage" aria-live="off" aria-label="Libro de Sokorhpa. Haz clic a la derecha para avanzar o a la izquierda para retroceder.">
+              <div class="page-slot page-slot--left is-empty" id="leftSlot"><img id="leftPage" alt="" draggable="false"></div>
+              <div class="page-slot page-slot--right" id="rightSlot"><img id="rightPage" src="assets/paginas/pagina-01.webp" alt="Portada de Tejiendo Territorio" draggable="false"></div>
+              <div class="book-spine" aria-hidden="true"></div>
+              <div class="turning-leaf" id="turningLeaf" aria-hidden="true">
+                <div class="leaf-face leaf-face--front"><img id="leafFront" alt="" draggable="false"></div>
+                <div class="leaf-face leaf-face--back"><img id="leafBack" alt="" draggable="false"></div>
+              </div>
+              <div class="edge-cue edge-cue--left" aria-hidden="true">‹</div>
+              <div class="edge-cue edge-cue--right" aria-hidden="true">›</div>
+            </div>
+          </div>
+
+          <button type="button" class="reader-arrow reader-arrow--next" id="nextArrow" aria-label="Pasar a las páginas siguientes" title="Páginas siguientes">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+
+        <div class="reader-controls" role="group" aria-label="Controles de lectura">
+          <div class="control-start">
+            <button type="button" class="control-button icon-button" id="previousButton" aria-label="Anterior" title="Anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+            <div class="page-count" id="pageCount" aria-live="polite"><span class="count-primary">Portada</span><span class="count-secondary">Pág. 1 de 15</span></div>
+            <button type="button" class="control-button icon-button" id="nextButton" aria-label="Siguiente" title="Siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+          <div class="control-end">
+            <label class="jump-label" for="jumpSelect">Ir a</label>
+            <select id="jumpSelect" aria-label="Ir a una página específica">
+              <option value="1">01 · Portada</option>
+              <option value="2">02 · Tejido</option>
+              <option value="3">03 · Presentación</option>
+              <option value="4">04 · El territorio</option>
+              <option value="5">05 · Mapa de Sokorhpa</option>
+              <option value="6">06 · Guía de lectura</option>
+              <option value="7">07 · Contenido</option>
+              <option value="8">08 · Kosarhi (apertura)</option>
+              <option value="9">09 · Kosarhi (capítulo)</option>
+              <option value="10">10 · Lectura bilingüe</option>
+              <option value="11">11 · Lectura bilingüe</option>
+              <option value="12">12 · Lectura bilingüe</option>
+              <option value="13">13 · Lectura bilingüe</option>
+              <option value="14">14 · Fotografías</option>
+              <option value="15">15 · Fotografías</option>
+            </select>
+            <span class="divider-vertical"></span>
+            <button type="button" class="control-button action-button" id="zoomButton" aria-label="Ampliar página actual" title="Ampliar la página">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.7"/><path d="m16 16 5 5M8 10.7h5.4M10.7 8v5.4"/></svg><span>Ampliar</span>
+            </button>
+            <button type="button" class="control-button icon-button" id="fullscreenButton" aria-label="Pantalla completa" title="Pantalla completa">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div class="navigation-detail">
+        <div class="navigation-heading"><span>Explorar páginas</span><span id="readerHelp">Haz clic en los bordes para pasar las hojas · Arrastra la esquina para girarlas · Usa ← →</span></div>
+        <div class="thumbnail-track" id="thumbnailTrack" aria-label="Páginas 1 a 15"></div>
+      </div>
+      <footer class="site-footer">
+        <span>Prototipo editorial para revisión · No constituye edición final autorizada</span>
+        <span>Serranía del Perijá · Cesar · Colombia</span>
+      </footer>
+    </main>
+  </div>
+
+  <dialog id="zoomDialog" class="modal image-modal" aria-label="Vista ampliada de la página">
+    <div class="modal-bar">
+      <div><span class="modal-eyebrow">VISTA AMPLIADA</span><strong id="zoomTitle">Página</strong></div>
+      <div class="modal-buttons">
+        <button class="modal-tool" type="button" id="zoomOut" aria-label="Reducir" title="Reducir">−</button>
+        <span class="zoom-percentage" id="zoomPercentage">100%</span>
+        <button class="modal-tool" type="button" id="zoomIn" aria-label="Aumentar" title="Aumentar">+</button>
+        <button class="modal-tool close-modal" type="button" id="zoomClose" aria-label="Cerrar vista ampliada" title="Cerrar">×</button>
+      </div>
+    </div>
+    <div class="zoom-scroller" id="zoomScroller"><img id="zoomImage" alt="Página ampliada" draggable="false"></div>
+  </dialog>
+
+  <dialog id="resourcesDialog" class="modal resources-modal" aria-label="Archivo visual de imágenes originales">
+    <div class="modal-bar">
+      <div><span class="modal-eyebrow">MATERIALES APORTADOS · ZIP ORIGINAL</span><strong>Archivo visual del libro</strong></div>
+      <button class="modal-tool close-modal" id="resourcesClose" type="button" aria-label="Cerrar archivo visual" title="Cerrar">×</button>
+    </div>
+    <p class="resources-description">Doce recursos recibidos para esta maqueta. Las páginas del lector conservan el diseño del PDF; esta selección facilita la revisión de fotografías, mapas e ilustraciones por separado.</p>
+    <div class="resources-grid" id="resourcesGrid"></div>
+    <p class="resources-footnote">La identificación, los créditos y los permisos de publicación deberán validarse en la edición definitiva.</p>
+  </dialog>
+
+  <script src="assets/recursos.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

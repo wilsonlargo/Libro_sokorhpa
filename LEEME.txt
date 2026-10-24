@@ -1,0 +1,43 @@
+TEJIENDO TERRITORIO — SOKORHPA
+Muestra de libro interactivo · páginas 1 a 15
+================================================
+
+PARA ABRIR LA APLICACIÓN
+1. Descomprime la carpeta completa.
+2. Abre "index.html" con Chrome, Chromium, Firefox o Edge.
+3. No hace falta instalar programas, usar internet ni iniciar un servidor.
+
+CÓMO UTILIZARLA
+- Haz clic en la página derecha para avanzar y en la izquierda para volver.
+- Arrastra una página hacia el lado opuesto para girarla.
+- Utiliza las flechas del teclado (izquierda / derecha).
+- Selecciona una página desde las miniaturas inferiores o el menú "Ir a".
+- El botón "Ampliar" abre la imagen de la página para leer el texto.
+- El botón "Archivo visual" muestra por separado las 12 imágenes aportadas.
+- En pantallas pequeñas se presenta una página a la vez.
+- El botón de pantalla completa amplía la superficie de lectura.
+
+QUÉ ESTÁ IMPLEMENTADO
+- Primera etapa visual: páginas 01 a 15 fieles al PDF proporcionado.
+- Transición 3D para simular el giro de una hoja, con sombra.
+- Vista a doble página y vista para teléfonos.
+- Galería de las imágenes incluidas en el ZIP entregado.
+- Independencia de servicios externos.
+
+SOBRE ESTA VERSIÓN
+Las páginas se muestran como imágenes de alta definición generadas
+DIRECTAMENTE de las primeras quince páginas del PDF de referencia.
+Es una maqueta de lectura; no modifica todavía textos ni diagramación.
+
+Las imágenes del archivo visual se han optimizado para una muestra web.
+Se requiere revisión editorial y validación comunitaria de créditos,
+identificaciones y autorizaciones antes de su publicación abierta.
+
+ESTRUCTURA
+index.html        — la aplicación web
+styles.css        — diseño y adaptación responsive
+app.js            — controles, interactividad y efecto de hoja
+assets/paginas/   — 15 páginas de la maqueta
+assets/miniaturas/— vistas previas de las 15 páginas
+assets/recursos/  — 12 recursos gráficos del ZIP de imágenes
+assets/recursos.js— catálogo local de la galería
