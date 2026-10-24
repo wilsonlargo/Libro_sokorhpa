@@ -1,5 +1,5 @@
 TEJIENDO TERRITORIO — SOKORHPA
-Muestra de libro interactivo · páginas 1 a 15
+Muestra de libro interactivo · páginas 1 a 15 · versión 2
 ================================================
 
 PARA ABRIR LA APLICACIÓN
@@ -12,6 +12,12 @@ CÓMO UTILIZARLA
 - Arrastra una página hacia el lado opuesto para girarla.
 - Utiliza las flechas del teclado (izquierda / derecha).
 - Selecciona una página desde las miniaturas inferiores o el menú "Ir a".
+- PÁGINA 5: al pasar el cursor sobre "Kosarhi" en el mapa se lee el
+  origen de su nombre; al hacer clic se abre la página 9. En móvil, tócalo.
+- PÁGINA 7: las entradas del índice son interactivas. "Kosarhi"
+  lleva directamente a la página 9. Las otras comunidades aparecen
+  señaladas como no disponibles, porque están fuera de esta muestra.
+- Los enlaces del mapa y del índice también funcionan al AMPLIAR la página.
 - El botón "Ampliar" abre la imagen de la página para leer el texto.
 - El botón "Archivo visual" muestra por separado las 12 imágenes aportadas.
 - En pantallas pequeñas se presenta una página a la vez.
@@ -23,6 +29,7 @@ QUÉ ESTÁ IMPLEMENTADO
 - Vista a doble página y vista para teléfonos.
 - Galería de las imágenes incluidas en el ZIP entregado.
 - Independencia de servicios externos.
+- Enlaces de lectura superpuestos al mapa y al índice sin alterar el PDF.
 
 SOBRE ESTA VERSIÓN
 Las páginas se muestran como imágenes de alta definición generadas
@@ -41,3 +48,15 @@ assets/paginas/   — 15 páginas de la maqueta
 assets/miniaturas/— vistas previas de las 15 páginas
 assets/recursos/  — 12 recursos gráficos del ZIP de imágenes
 assets/recursos.js— catálogo local de la galería
+
+ALCANCE DE LOS ENLACES
+Esta demostración utiliza solo las páginas 1 a 15 del PDF.
+El índice indica que Tierra Fría comienza en la 17, Asatatpo en la 25
+y otros capítulos aparecen más adelante. Hasta que se incorporen esas
+páginas, al seleccionar sus entradas aparece un aviso informativo.
+No se redirige a capítulos equivocados.
+
+CÓMO EXTENDER EL MAPA
+Los enlaces se definen en app.js (fillHotspots) con coordenadas en
+porcentajes sobre cada página. Pueden añadirse otras comunidades
+cuando sus capítulos estén disponibles.

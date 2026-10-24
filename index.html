@@ -42,7 +42,7 @@
           <div class="book-shell is-cover" id="bookShell">
             <div class="book-stage" id="bookStage" aria-live="off" aria-label="Libro de Sokorhpa. Haz clic a la derecha para avanzar o a la izquierda para retroceder.">
               <div class="page-slot page-slot--left is-empty" id="leftSlot"><img id="leftPage" alt="" draggable="false"></div>
-              <div class="page-slot page-slot--right" id="rightSlot"><img id="rightPage" src="assets/paginas/pagina-01.webp" alt="Portada de Tejiendo Territorio" draggable="false"></div>
+              <div class="page-slot page-slot--right" id="rightSlot"><img id="rightPage" src="assets/paginas/pagina-01.webp" alt="Portada de Tejiendo Territorio" draggable="false"><div class="interactive-layer" id="pageHotspots" aria-label="Enlaces de esta página"></div></div>
               <div class="book-spine" aria-hidden="true"></div>
               <div class="turning-leaf" id="turningLeaf" aria-hidden="true">
                 <div class="leaf-face leaf-face--front"><img id="leafFront" alt="" draggable="false"></div>
@@ -94,6 +94,7 @@
         </div>
       </section>
 
+      <div class="reader-note" id="interactiveNote" role="status" aria-live="polite" hidden></div>
       <div class="navigation-detail">
         <div class="navigation-heading"><span>Explorar páginas</span><span id="readerHelp">Haz clic en los bordes para pasar las hojas · Arrastra la esquina para girarlas · Usa ← →</span></div>
         <div class="thumbnail-track" id="thumbnailTrack" aria-label="Páginas 1 a 15"></div>
@@ -115,7 +116,7 @@
         <button class="modal-tool close-modal" type="button" id="zoomClose" aria-label="Cerrar vista ampliada" title="Cerrar">×</button>
       </div>
     </div>
-    <div class="zoom-scroller" id="zoomScroller"><img id="zoomImage" alt="Página ampliada" draggable="false"></div>
+    <div class="zoom-scroller" id="zoomScroller"><div class="zoom-canvas" id="zoomCanvas"><img id="zoomImage" alt="Página ampliada" draggable="false"><div class="interactive-layer" id="zoomHotspots" aria-label="Enlaces de esta página ampliada"></div></div></div>
   </dialog>
 
   <dialog id="resourcesDialog" class="modal resources-modal" aria-label="Archivo visual de imágenes originales">

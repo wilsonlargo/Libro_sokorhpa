@@ -23,15 +23,85 @@
     count:byId('pageCount'),jump:byId('jumpSelect'),thumbs:byId('thumbnailTrack'),
     zoomDialog:byId('zoomDialog'),zoomImage:byId('zoomImage'),zoomTitle:byId('zoomTitle'),
     zoomPercentage:byId('zoomPercentage'),zoomScroller:byId('zoomScroller'),
-    resourcesDialog:byId('resourcesDialog'),resourcesGrid:byId('resourcesGrid')
+    resourcesDialog:byId('resourcesDialog'),resourcesGrid:byId('resourcesGrid'),
+    pageHotspots:byId('pageHotspots'),zoomHotspots:byId('zoomHotspots'),
+    zoomCanvas:byId('zoomCanvas'),interactiveNote:byId('interactiveNote')
   };
   const mobileQuery = window.matchMedia('(max-width:720px)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const state = {mobile:mobileQuery.matches,spread:0,page:1,turn:null,drag:null,quietUntil:0,zoom:1,zoomLandscape:false};
+  const state = {mobile:mobileQuery.matches,spread:0,page:1,turn:null,drag:null,quietUntil:0,zoom:1,zoomLandscape:false,noteTimer:null,zoomPage:0};
   const resourceItems = Array.isArray(window.SOKORHPA_RECURSOS) ? window.SOKORHPA_RECURSOS : [];
 
   function pageUrl(number){
     return number>=1 && number<=TOTAL ? `assets/paginas/pagina-${String(number).padStart(2,'0')}.webp` : '';
+  }
+  // Las coordenadas de los enlaces son porcentajes de la página original,
+  // no de la pantalla. Por ello conservan su posición en móvil y al ampliar.
+  const indexEntries = [
+    {name:'Kosarhi',page:9},
+    {name:'Tierra Fría / Owaya Koyipa',page:17},
+    {name:'Asatatpo',page:25},
+    {name:'Las Peñas',page:33},
+    {name:'Kushna Ayitpo',page:37},
+    {name:'Santo Tomás / Wayiko',page:45},
+    {name:'Mayoría',page:53},
+    {name:'Kuya',page:59},
+    {name:'Ipika',page:67}
+  ];
+  function informUnavailable(entry){
+    clearTimeout(state.noteTimer);
+    $.interactiveNote.textContent=`${entry.name} comienza en la página ${entry.page}. Esta muestra contiene solamente las páginas 1 a ${TOTAL}.`;
+    $.interactiveNote.hidden=false;
+    state.noteTimer=setTimeout(()=>{$.interactiveNote.hidden=true;},5200);
+  }
+  function navigateFromPage(entry){
+    if(entry.page>TOTAL){informUnavailable(entry);return;}
+    if($.zoomDialog.open)$.zoomDialog.close();
+    goToPage(entry.page);
+  }
+  function createInteractiveButton(kind,label,entry){
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className=`page-hotspot ${kind}`;
+    btn.setAttribute('aria-label',label);
+    btn.title=kind==='index-hotspot' ? (entry.page<=TOTAL ? `Ir a ${entry.name} · página ${entry.page}` : `${entry.name} · página ${entry.page} todavía no incorporada`) : '';
+    // El clic sobre el texto del mapa o del índice nunca debe pasar hojas.
+    for(const type of ['pointerdown','pointerup','pointermove','click']){
+      btn.addEventListener(type,event=>event.stopPropagation());
+    }
+    btn.addEventListener('click',()=>navigateFromPage(entry));
+    return btn;
+  }
+  function fillHotspots(layer,page){
+    layer.replaceChildren();
+    layer.hidden=page!==5&&page!==7;
+    if(layer.hidden)return;
+    if(page===5){
+      const hotspot=createInteractiveButton(
+        'map-hotspot',
+        'Kosarhi. Su nombre recuerda los brotes de palma cocotera que abundaban junto a los caños. Abrir capítulo en la página 9.',
+        indexEntries[0]
+      );
+      hotspot.style.left='44.7%';hotspot.style.top='72.75%';
+      hotspot.style.width='12.8%';hotspot.style.height='4.3%';
+      const tip=document.createElement('span');tip.className='map-tooltip';tip.setAttribute('role','tooltip');
+      tip.innerHTML='<strong>Kosarhi</strong><span>Su nombre recuerda los brotes de palma cocotera que abundaban junto a los caños donde se asentaron sus primeros habitantes.</span><em>Ir al capítulo · página 9 ↗</em>';
+      hotspot.appendChild(tip);
+      layer.appendChild(hotspot);
+    }else{
+      const starts=[25.95,30.03,34.09,38.15,42.21,46.29,50.35,54.41,58.47];
+      indexEntries.forEach((entry,i)=>{
+        const active=entry.page<=TOTAL;
+        const hotspot=createInteractiveButton(
+          'index-hotspot'+(active?'':' is-pending'),
+          active ? `Abrir ${entry.name}, página ${entry.page}` : `${entry.name}, página ${entry.page}, aún no incorporada a la muestra`,
+          entry
+        );
+        hotspot.style.left='9.15%';hotspot.style.top=`${starts[i]}%`;
+        hotspot.style.width='79.6%';hotspot.style.height='3.45%';
+        layer.appendChild(hotspot);
+      });
+    }
   }
   function setPage(img, number){
     const src=pageUrl(number);
@@ -73,6 +143,8 @@
     setPage($.right,p.right);
     $.leftSlot.classList.toggle('is-empty',!p.left);
     $.shell.classList.toggle('is-cover',!state.mobile && state.spread===0);
+    fillHotspots($.pageHotspots,p.right);
+    byId('readerHelp').textContent=p.right===5 ? 'Mapa interactivo: sitúa el cursor sobre Kosarhi y haz clic para abrir su capítulo' : p.right===7 ? 'Índice interactivo: selecciona una comunidad para abrir su página' : 'Haz clic en los bordes para pasar las hojas · Arrastra la esquina para girarlas · Usa ← →';
     updateControls();
     for(let i=Math.max(1,p.right-2);i<=Math.min(TOTAL,p.right+3);i++){
       const img=new Image();img.src=pageUrl(i);
@@ -243,12 +315,14 @@
   function updateZoom(){
     const viewportWidth=$.zoomScroller.clientWidth||window.innerWidth;
     const baseWidth=state.zoomLandscape ? Math.min(1000,viewportWidth-28) : Math.min(720,viewportWidth-28);
-    $.zoomImage.style.width=`${Math.round(baseWidth*state.zoom)}px`;
+    $.zoomCanvas.style.width=`${Math.round(baseWidth*state.zoom)}px`;
     $.zoomPercentage.textContent=`${Math.round(state.zoom*100)}%`;
   }
-  function showImage(src,title){
+  function showImage(src,title,pageNumber=0){
     state.zoom=1;
     state.zoomLandscape=false;
+    state.zoomPage=pageNumber;
+    fillHotspots($.zoomHotspots,pageNumber);
     $.zoomTitle.textContent=title;
     $.zoomImage.onload=()=>{
       state.zoomLandscape=$.zoomImage.naturalWidth>$.zoomImage.naturalHeight;
@@ -262,7 +336,7 @@
   }
   byId('zoomButton').addEventListener('click',()=>{
     const p=visiblePages().right;
-    showImage(pageUrl(p),`Página ${p} · ${labels[p-1]}`);
+    showImage(pageUrl(p),`Página ${p} · ${labels[p-1]}`,p);
   });
   byId('zoomClose').addEventListener('click',()=>$.zoomDialog.close());
   byId('zoomIn').addEventListener('click',()=>{state.zoom=Math.min(3,Math.round((state.zoom+.25)*100)/100);updateZoom();});

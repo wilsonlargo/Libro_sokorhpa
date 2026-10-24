@@ -169,3 +169,27 @@ h1{font-size:clamp(19px,1.85vw,26px);letter-spacing:-.028em;font-weight:680;line
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
 }
+
+/* ENLACES EDITORIALES · mapa e índice del PDF (páginas 5 y 7) */
+.interactive-layer{position:absolute;inset:0;z-index:8;pointer-events:none}
+.interactive-layer[hidden],.reader-note[hidden]{display:none!important}
+.page-hotspot{position:absolute;padding:0;pointer-events:auto;border:1px solid transparent;border-radius:3px;background:transparent;color:inherit;cursor:pointer;touch-action:manipulation;}
+.page-hotspot:hover,.page-hotspot:focus-visible{background:rgba(248,247,223,.23);outline:2px solid rgba(37,96,83,.78);outline-offset:1px}
+.book-stage.is-turning .interactive-layer{visibility:hidden;pointer-events:none}
+.map-hotspot:hover,.map-hotspot:focus-visible{background:rgba(235,250,236,.22);outline:2px dashed #245d5a}
+.map-tooltip{display:none;position:absolute;z-index:20;left:0;bottom:calc(100% + 11px);transform:translateX(-30%);width:clamp(205px,23vw,278px);max-width:72vw;padding:12px 14px 11px;text-align:left;white-space:normal;border:1px solid rgba(74,101,77,.32);border-radius:7px;background:#fffdf5;color:#283e31;box-shadow:0 8px 24px rgba(13,30,22,.20);font:12px/1.48 system-ui,-apple-system,'Segoe UI',sans-serif}
+.map-tooltip strong{display:block;font-size:14px;margin-bottom:4px;letter-spacing:.005em;color:#2d6858}
+.map-tooltip span{display:block;color:#354840}
+.map-tooltip em{display:block;font-size:10px;letter-spacing:.02em;font-style:normal;font-weight:750;color:#387662;margin-top:8px}
+.map-hotspot:hover .map-tooltip,.map-hotspot:focus .map-tooltip{display:block}
+.index-hotspot:hover,.index-hotspot:focus-visible{background:rgba(79,127,103,.10);outline:1px solid rgba(59,109,79,.42);outline-offset:0}
+.index-hotspot.is-pending:hover,.index-hotspot.is-pending:focus-visible{background:rgba(110,114,105,.08);outline-color:#a0a69b}
+.reader-note{position:fixed;z-index:80;bottom:24px;left:50%;transform:translateX(-50%);width:max-content;max-width:min(92vw,490px);padding:13px 18px;border-radius:7px;background:#fffcf2;border:1px solid #d7ddc9;color:#455944;box-shadow:0 9px 35px rgba(23,34,23,.18);font-size:12px;line-height:1.55;text-align:center}
+.zoom-canvas{position:relative;display:block;width:max-content;height:auto;margin:0 auto;box-shadow:0 4px 30px rgba(38,48,38,.18)}
+.zoom-canvas>img{display:block;width:100%;height:auto;max-width:none;margin:0;box-shadow:none}
+@media(max-width:720px){
+  .map-tooltip{width:min(240px,68vw);font-size:11px;padding:9px 11px;transform:translateX(-30%)}
+  .map-tooltip strong{font-size:12px}
+  .map-tooltip em{font-size:9px}
+  .reader-note{bottom:16px;font-size:11px;padding:10px 12px}
+}
