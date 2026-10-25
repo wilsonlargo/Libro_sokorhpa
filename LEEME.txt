@@ -1,62 +1,84 @@
-TEJIENDO TERRITORIO — SOKORHPA
-Muestra de libro interactivo · páginas 1 a 15 · versión 2
-================================================
+SOKORHPA — TEJIENDO TERRITORIO
+LIBRO INTERACTIVO · VERSIÓN 3 (MUESTRA DE 31 PÁGINAS)
 
-PARA ABRIR LA APLICACIÓN
-1. Descomprime la carpeta completa.
-2. Abre "index.html" con Chrome, Chromium, Firefox o Edge.
-3. No hace falta instalar programas, usar internet ni iniciar un servidor.
+1. PARA ABRIR
 
-CÓMO UTILIZARLA
-- Haz clic en la página derecha para avanzar y en la izquierda para volver.
-- Arrastra una página hacia el lado opuesto para girarla.
-- Utiliza las flechas del teclado (izquierda / derecha).
-- Selecciona una página desde las miniaturas inferiores o el menú "Ir a".
-- PÁGINA 5: al pasar el cursor sobre "Kosarhi" en el mapa se lee el
-  origen de su nombre; al hacer clic se abre la página 9. En móvil, tócalo.
-- PÁGINA 7: las entradas del índice son interactivas. "Kosarhi"
-  lleva directamente a la página 9. Las otras comunidades aparecen
-  señaladas como no disponibles, porque están fuera de esta muestra.
-- Los enlaces del mapa y del índice también funcionan al AMPLIAR la página.
-- El botón "Ampliar" abre la imagen de la página para leer el texto.
-- El botón "Archivo visual" muestra por separado las 12 imágenes aportadas.
-- En pantallas pequeñas se presenta una página a la vez.
-- El botón de pantalla completa amplía la superficie de lectura.
+Descomprima todo el archivo ZIP. Abra «index.html» en un navegador web
+(Chrome, Chromium o Firefox). Los archivos CSS, JavaScript, imágenes y
+miniaturas se encuentran dentro de la misma carpeta y no requieren conexión.
 
-QUÉ ESTÁ IMPLEMENTADO
-- Primera etapa visual: páginas 01 a 15 fieles al PDF proporcionado.
-- Transición 3D para simular el giro de una hoja, con sombra.
-- Vista a doble página y vista para teléfonos.
-- Galería de las imágenes incluidas en el ZIP entregado.
-- Independencia de servicios externos.
-- Enlaces de lectura superpuestos al mapa y al índice sin alterar el PDF.
+Si va a instalar el sitio en un servidor, publique el contenido completo de
+la carpeta Sokorhpa_Libro_Interactivo_v3 conservando su estructura.
 
-SOBRE ESTA VERSIÓN
-Las páginas se muestran como imágenes de alta definición generadas
-DIRECTAMENTE de las primeras quince páginas del PDF de referencia.
-Es una maqueta de lectura; no modifica todavía textos ni diagramación.
+2. NAVEGACIÓN
 
-Las imágenes del archivo visual se han optimizado para una muestra web.
-Se requiere revisión editorial y validación comunitaria de créditos,
-identificaciones y autorizaciones antes de su publicación abierta.
+- Pasar páginas: flechas junto al libro o botones inferiores.
+- Computador: clic en bordes, arrastre de hoja, teclas izquierda/derecha.
+- Celular: una página a la vez; arrastre para pasar la hoja.
+- Miniaturas: acceso a cualquiera de las 31 páginas.
+- Selector «Ir a»: navegación directa a las páginas 01–31.
+- Botón «Ampliar»: zoom de lectura y enlaces activos en el mapa e índice.
+- Botón «Archivo visual»: galería de 42 imágenes del ZIP actualizado.
 
-ESTRUCTURA
-index.html        — la aplicación web
-styles.css        — diseño y adaptación responsive
-app.js            — controles, interactividad y efecto de hoja
-assets/paginas/   — 15 páginas de la maqueta
-assets/miniaturas/— vistas previas de las 15 páginas
-assets/recursos/  — 12 recursos gráficos del ZIP de imágenes
-assets/recursos.js— catálogo local de la galería
+3. PÁGINA 5 — MAPA INTERACTIVO
 
-ALCANCE DE LOS ENLACES
-Esta demostración utiliza solo las páginas 1 a 15 del PDF.
-El índice indica que Tierra Fría comienza en la 17, Asatatpo en la 25
-y otros capítulos aparecen más adelante. Hasta que se incorporen esas
-páginas, al seleccionar sus entradas aparece un aviso informativo.
-No se redirige a capítulos equivocados.
+Se pueden explorar los nombres de los asentamientos de la cartografía.
+Al pasar el mouse aparece un resumen de la información documentada.
+Los siguientes destinos ya están incluidos en la muestra:
 
-CÓMO EXTENDER EL MAPA
-Los enlaces se definen en app.js (fillHotspots) con coordenadas en
-porcentajes sobre cada página. Pueden añadirse otras comunidades
-cuando sus capítulos estén disponibles.
+  Sokorhpa / La Misión → página 9
+  Kosarhi → página 23
+  Owaya Koyipa / Tierra Fría → página 31
+
+Los otros asentamientos tienen enlaces informativos que señalan la página
+de su capítulo futuro, sin intentar abrir contenido que no existe aún.
+En dispositivos táctiles, por ahora, un toque sobre un capítulo disponible
+abre directamente su página. El diseño de ficha previa de primer toque
+queda pendiente para cuando se incorporen todos los capítulos.
+
+4. PÁGINA 7 — ÍNDICE DIGITAL ACTUALIZADO
+
+El PDF recibido conserva en su índice la paginación de un borrador anterior.
+La página 7 se redibujó ÚNICAMENTE para este prototipo digital, sin alterar
+el PDF fuente, corrigiendo el orden y las páginas de inicio:
+
+  01 Sokorhpa                     09
+  02 Kosarhi                      23
+  03 Owaya Koyipa / Tierra Fría   31
+  04 Asatatpo                     39
+  05 Las Peñas                    47
+  06 Kushna Ayitpo                51
+  07 Santo Tomás / Wayiko         59
+  08 Mayoría                      67
+  09 Kuya                         73
+  10 Ipika                        81
+
+Únicamente 1–31 están presentes en esta muestra. Los restantes capítulos
+no se han añadido, aunque el índice deja informadas sus páginas futuras.
+
+NOTA EDITORIAL: Los títulos internos de capítulo en el PDF fuente aún
+presentan numeración no armonizada (Sokorhpa «Capítulo 1», Kosarhi
+«Capítulo 01», Owaya Koyipa «Capítulo 02»). Se conservaron las páginas
+originales, salvo el índice digital reemplazado. La renumeración de los
+títulos corresponde a una próxima revisión del documento editorial.
+
+5. ARCHIVOS
+
+index.html                Interfaz de lectura.
+styles.css                Presentación y animación del efecto libro.
+app.js                    Controles e interacciones del mapa y el índice.
+assets/paginas/           Páginas 01–31 renderizadas desde el nuevo PDF.
+assets/miniaturas/        Miniaturas para navegación.
+assets/recursos/          42 imágenes del ZIP adaptadas para pantalla.
+assets/recursos.js        Índice de la galería offline.
+assets/recursos.json      Lista de materiales gráficos.
+
+6. FUENTES Y DERECHOS
+
+Fuente editorial: «Sokorhpa_Borrador_Completo_Paleta_v04(1).pdf».
+Fuente gráfica: «img oficial(1).zip».
+Los textos en yukpa, los mapas comunitarios y fotografías se conservan del
+material suministrado. Antes de la difusión pública deben comprobarse
+créditos, revisiones lingüísticas y autorizaciones de publicación.
+
+Este archivo es una muestra técnica/editorial, no una edición aprobada.

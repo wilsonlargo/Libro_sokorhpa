@@ -193,3 +193,16 @@ h1{font-size:clamp(19px,1.85vw,26px);letter-spacing:-.028em;font-weight:680;line
   .map-tooltip em{font-size:9px}
   .reader-note{bottom:16px;font-size:11px;padding:10px 12px}
 }
+
+/* Páginas de la nueva edición: 31 hojas, mapa con capítulos disponibles y futuros */
+.map-hotspot.is-pending:hover,.map-hotspot.is-pending:focus-visible{outline-color:#be8a61;background:rgba(252,234,204,.18)}
+.index-hotspot{border-radius:4px}
+.map-hotspot{border-radius:4px}
+@media (hover:none) and (pointer:coarse){
+  .map-hotspot:active,.index-hotspot:active{outline:2px solid #386e5e;background:rgba(230,246,231,.24)}
+  .map-tooltip{display:none!important}
+}
+
+/* Mantener las fichas dentro de la página, incluso en los extremos del mapa. */
+.map-hotspot.map-spot-west .map-tooltip{transform:translateX(0)}
+.map-hotspot.map-spot-east .map-tooltip{transform:translateX(-76%)}

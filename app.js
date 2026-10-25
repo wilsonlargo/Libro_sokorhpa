@@ -5,13 +5,22 @@
  */
 (() => {
   'use strict';
-  const TOTAL = 15;
+  const TOTAL = 31;
   const labels = [
-    'Portada','Ilustración: tejido','Presentación','El territorio de Sokorhpa',
-    'Mapa del territorio','Guía de lectura','Contenido','Kosarhi: apertura',
-    'Kosarhi: cartografía','Kosarhi: lectura bilingüe','Kosarhi: lectura bilingüe',
-    'Kosarhi: lectura bilingüe','Kosarhi: lectura bilingüe','Kosarhi: archivo fotográfico',
-    'Kosarhi: archivo fotográfico'
+    'Portada','Tejido tradicional','Presentación','El territorio de Sokorhpa',
+    'Mapa del territorio','Guía de lectura','Índice actualizado','Sokorhpa · apertura',
+    'Sokorhpa · mapa comunitario','Sokorhpa · nombre y significado',
+    'Sokorhpa · ubicación y afluentes','Sokorhpa · lugares sagrados',
+    'Sokorhpa · sitios de interés','Sokorhpa · aspectos sociales y políticos',
+    'Sokorhpa · historia comunitaria','Sokorhpa · organización comunitaria',
+    'Sokorhpa · economía propia','Sokorhpa · plantas y frutos',
+    'Sokorhpa · plantas medicinales','Sokorhpa · materiales para artesanías',
+    'Sokorhpa · fauna y avances tecnológicos','Kosarhi · apertura',
+    'Kosarhi · mapa comunitario','Kosarhi · lectura bilingüe',
+    'Kosarhi · lectura bilingüe','Kosarhi · lectura bilingüe',
+    'Kosarhi · lectura bilingüe','Kosarhi · fotografía comunitaria',
+    'Kosarhi · fotografía comunitaria','Kosarhi · ilustración comunitaria',
+    'Owaya Koyipa / Tierra Fría · mapa comunitario'
   ];
   const byId = id => document.getElementById(id);
   const $ = {
@@ -38,15 +47,40 @@
   // Las coordenadas de los enlaces son porcentajes de la página original,
   // no de la pantalla. Por ello conservan su posición en móvil y al ampliar.
   const indexEntries = [
-    {name:'Kosarhi',page:9},
-    {name:'Tierra Fría / Owaya Koyipa',page:17},
-    {name:'Asatatpo',page:25},
-    {name:'Las Peñas',page:33},
-    {name:'Kushna Ayitpo',page:37},
-    {name:'Santo Tomás / Wayiko',page:45},
-    {name:'Mayoría',page:53},
-    {name:'Kuya',page:59},
-    {name:'Ipika',page:67}
+    {name:'Sokorhpa',page:9},
+    {name:'Kosarhi',page:23},
+    {name:'Owaya Koyipa / Tierra Fría',page:31},
+    {name:'Asatatpo',page:39},
+    {name:'Las Peñas',page:47},
+    {name:'Kushna Ayitpo',page:51},
+    {name:'Santo Tomás / Wayiko',page:59},
+    {name:'Mayoría',page:67},
+    {name:'Kuya',page:73},
+    {name:'Ipika',page:81}
+  ];
+  // Map coordinates correspond to the unchanged cartography on page 5.
+  // Pending entries remain discoverable but never navigate outside the sample.
+  const mapEntries = [
+    {name:'Sokorhpa / La Misión',page:9,left:60.7,top:51.3,width:19.2,height:3.3,
+     description:'El nombre Sokorhpa se relaciona con el rocío permanente que mantenía húmeda la vegetación de este lugar.'},
+    {name:'Kosarhi',page:23,left:44.1,top:73.4,width:9.7,height:4.2,
+     description:'Su nombre recuerda los brotes de palma cocotera que abundaban junto a los caños cuando llegaron los primeros habitantes.'},
+    {name:'Owaya Koyipa / Tierra Fría',page:31,left:55,top:72.1,width:13.4,height:5.1,
+     description:'El nombre Tierra Fría se relaciona con el clima de montaña de la comunidad; en yukpa se denomina Owaya Koyipa.'},
+    {name:'Asatatpo',page:39,left:12.9,top:70.4,width:16.1,height:5.5,
+     description:'Nombre ancestral asociado a lugares de descanso, encuentro y actividades comunitarias como la pesca.'},
+    {name:'Las Peñas',page:47,left:41.5,top:68.1,width:9.1,height:4.3,
+     description:'Asentamiento del territorio Yukpa de Sokorhpa.'},
+    {name:'Kushna Ayitpo',page:51,left:29.6,top:51.9,width:13.5,height:4.1,
+     description:'Lugar recordado como punto de descanso y recolección durante los recorridos ancestrales.'},
+    {name:'Santo Tomás / Wayiko',page:59,left:69.6,top:55,width:10.2,height:4.7,
+     description:'Wayiko es el nombre tradicional del barro utilizado para elaborar pipas y vasijas.'},
+    {name:'Mayoría',page:67,left:50.6,top:66.6,width:8.2,height:4.7,
+     description:'Comunidad también conocida por el nombre Yikunashkakoch.'},
+    {name:'Kuya',page:73,left:12.4,top:49.6,width:8.9,height:5.2,
+     description:'Kuya es el nombre en lengua wonirh de la palma de iraca presente en el lugar.'},
+    {name:'Ipika',page:81,left:6.9,top:57.3,width:8.3,height:5.2,
+     description:'Comunidad de la zona baja del resguardo, a orillas del río Maracas.'}
   ];
   function informUnavailable(entry){
     clearTimeout(state.noteTimer);
@@ -55,7 +89,7 @@
     state.noteTimer=setTimeout(()=>{$.interactiveNote.hidden=true;},5200);
   }
   function navigateFromPage(entry){
-    if(entry.page>TOTAL){informUnavailable(entry);return;}
+    if(entry.page>TOTAL){if($.zoomDialog.open)$.zoomDialog.close();informUnavailable(entry);return;}
     if($.zoomDialog.open)$.zoomDialog.close();
     goToPage(entry.page);
   }
@@ -77,19 +111,27 @@
     layer.hidden=page!==5&&page!==7;
     if(layer.hidden)return;
     if(page===5){
-      const hotspot=createInteractiveButton(
-        'map-hotspot',
-        'Kosarhi. Su nombre recuerda los brotes de palma cocotera que abundaban junto a los caños. Abrir capítulo en la página 9.',
-        indexEntries[0]
-      );
-      hotspot.style.left='44.7%';hotspot.style.top='72.75%';
-      hotspot.style.width='12.8%';hotspot.style.height='4.3%';
-      const tip=document.createElement('span');tip.className='map-tooltip';tip.setAttribute('role','tooltip');
-      tip.innerHTML='<strong>Kosarhi</strong><span>Su nombre recuerda los brotes de palma cocotera que abundaban junto a los caños donde se asentaron sus primeros habitantes.</span><em>Ir al capítulo · página 9 ↗</em>';
-      hotspot.appendChild(tip);
-      layer.appendChild(hotspot);
+      mapEntries.forEach(entry=>{
+        const available=entry.page<=TOTAL;
+        const hotspot=createInteractiveButton(
+          'map-hotspot'+(available?'':' is-pending'),
+          `${entry.name}. ${entry.description} ${available ? 'Abrir capítulo en la página '+entry.page : 'Capítulo aún no disponible: página '+entry.page}.`,
+          entry
+        );
+        Object.assign(hotspot.style,{
+          left:entry.left+'%',top:entry.top+'%',width:entry.width+'%',height:entry.height+'%'
+        });
+        hotspot.classList.add(entry.left<20?'map-spot-west':(entry.left>60?'map-spot-east':'map-spot-center'));
+        const tip=document.createElement('span');
+        tip.className='map-tooltip';tip.setAttribute('role','tooltip');
+        const heading=document.createElement('strong');heading.textContent=entry.name;
+        const desc=document.createElement('span');desc.textContent=entry.description;
+        const link=document.createElement('em');
+        link.textContent=available ? `Ir al capítulo · página ${entry.page} ↗` : `Próximamente · página ${entry.page}`;
+        tip.append(heading,desc,link);hotspot.appendChild(tip);
+        layer.appendChild(hotspot);
+      });
     }else{
-      const starts=[25.95,30.03,34.09,38.15,42.21,46.29,50.35,54.41,58.47];
       indexEntries.forEach((entry,i)=>{
         const active=entry.page<=TOTAL;
         const hotspot=createInteractiveButton(
@@ -97,8 +139,8 @@
           active ? `Abrir ${entry.name}, página ${entry.page}` : `${entry.name}, página ${entry.page}, aún no incorporada a la muestra`,
           entry
         );
-        hotspot.style.left='9.15%';hotspot.style.top=`${starts[i]}%`;
-        hotspot.style.width='79.6%';hotspot.style.height='3.45%';
+        hotspot.style.left='6.9%';hotspot.style.top=`${28.05+i*5.5}%`;
+        hotspot.style.width='86.2%';hotspot.style.height='4.3%';
         layer.appendChild(hotspot);
       });
     }
@@ -115,14 +157,14 @@
   }
   function canTurn(direction){
     if(state.mobile) return direction===1 ? state.page<TOTAL : state.page>1;
-    return direction===1 ? state.spread<7 : state.spread>0;
+    return direction===1 ? state.spread<Math.floor((TOTAL-1)/2) : state.spread>0;
   }
   function updateControls(){
     for(const control of [$.previousArrow,$.previousButton]) control.disabled=!canTurn(-1);
     for(const control of [$.nextArrow,$.nextButton]) control.disabled=!canTurn(1);
     const p=visiblePages();
     const primary=state.mobile ? `Página ${p.right}` : (p.left===null?'Portada':`Páginas ${p.left}–${p.right}`);
-    const secondary=state.mobile ? `${labels[p.right-1]} · de 15` : (p.left===null?'Pág. 1 de 15':`${String(p.left).padStart(2,'0')}—${String(p.right).padStart(2,'0')} · de 15`);
+    const secondary=state.mobile ? `${labels[p.right-1]} · de ${TOTAL}` : (p.left===null?`Pág. 1 de ${TOTAL}`:`${String(p.left).padStart(2,'0')}—${String(p.right).padStart(2,'0')} · de ${TOTAL}`);
     $.count.replaceChildren();
     const first=document.createElement('span');first.className='count-primary';first.textContent=primary;
     const second=document.createElement('span');second.className='count-secondary';second.textContent=secondary;
@@ -144,7 +186,7 @@
     $.leftSlot.classList.toggle('is-empty',!p.left);
     $.shell.classList.toggle('is-cover',!state.mobile && state.spread===0);
     fillHotspots($.pageHotspots,p.right);
-    byId('readerHelp').textContent=p.right===5 ? 'Mapa interactivo: sitúa el cursor sobre Kosarhi y haz clic para abrir su capítulo' : p.right===7 ? 'Índice interactivo: selecciona una comunidad para abrir su página' : 'Haz clic en los bordes para pasar las hojas · Arrastra la esquina para girarlas · Usa ← →';
+    byId('readerHelp').textContent=p.right===5 ? 'Mapa interactivo: explora los asentamientos, conoce su nombre y visita los capítulos disponibles' : p.right===7 ? 'Índice interactivo actualizado: selecciona una comunidad para abrir su capítulo' : 'Haz clic en los bordes para pasar las hojas · Arrastra la esquina para girarlas · Usa ← →';
     updateControls();
     for(let i=Math.max(1,p.right-2);i<=Math.min(TOTAL,p.right+3);i++){
       const img=new Image();img.src=pageUrl(i);
@@ -226,6 +268,15 @@
     render();
     document.querySelector(`.thumb[data-page="${n}"]`)?.scrollIntoView({inline:'nearest',block:'nearest',behavior:'smooth'});
   }
+  function populatePageSelect(){
+    $.jump.replaceChildren();
+    labels.forEach((label,i)=>{
+      const option=document.createElement('option');
+      option.value=String(i+1);
+      option.textContent=String(i+1).padStart(2,'0')+' · '+label;
+      $.jump.appendChild(option);
+    });
+  }
   function createThumbs(){
     const fragment=document.createDocumentFragment();
     for(let i=1;i<=TOTAL;i++){
@@ -294,7 +345,7 @@
     if(event.key==='ArrowRight'){event.preventDefault();turn(1);}
     if(event.key==='ArrowLeft'){event.preventDefault();turn(-1);}
     if(event.key==='Home'){event.preventDefault();goToPage(1);}
-    if(event.key==='End'){event.preventDefault();goToPage(15);}
+    if(event.key==='End'){event.preventDefault();goToPage(TOTAL);}
     if(event.key==='Escape'&&document.fullscreenElement){document.exitFullscreen().catch(()=>{});}
   });
   function updateLayout(event){
@@ -362,5 +413,5 @@
   byId('resourcesButton').addEventListener('click',()=>$.resourcesDialog.showModal());
   byId('resourcesClose').addEventListener('click',()=>$.resourcesDialog.close());
   $.resourcesDialog.addEventListener('click',event=>{if(event.target===$.resourcesDialog)$.resourcesDialog.close();});
-  buildResources();createThumbs();render();
+  buildResources();populatePageSelect();createThumbs();render();
 })();

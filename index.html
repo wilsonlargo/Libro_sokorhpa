@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f2f1ed">
-  <meta name="description" content="Prototipo interactivo de lectura del Libro del Territorio Yukpa de Sokorhpa. Primeras quince páginas.">
+  <meta name="description" content="Prototipo interactivo de lectura del Libro del Territorio Yukpa de Sokorhpa. Primeras 31 páginas.">
   <title>Tejiendo Territorio | Sokorhpa — Libro interactivo</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -19,7 +19,7 @@
         <span class="prototype-label"><span class="status-dot"></span> Prototipo de lectura</span>
         <button class="header-button" type="button" id="resourcesButton" aria-haspopup="dialog" aria-controls="resourcesDialog">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 16-5.5-5.5L5 21"/></svg>
-          <span>Archivo visual</span><span class="resource-number">12</span>
+          <span>Archivo visual</span><span class="resource-number">42</span>
         </button>
       </div>
     </header>
@@ -30,7 +30,7 @@
           <p class="eyebrow">LIBRO TERRITORIAL · MUESTRA DIGITAL</p>
           <h1>Tejiendo Territorio <span class="title-sub">/ Memorias, saberes y vida comunitaria</span></h1>
         </div>
-        <div class="intro-badge">Páginas 01—15 <span>de la maqueta editorial</span></div>
+        <div class="intro-badge">Páginas 01—31 <span>de la maqueta editorial</span></div>
       </div>
 
       <section class="reader" aria-label="Lector del libro interactivo">
@@ -61,28 +61,12 @@
         <div class="reader-controls" role="group" aria-label="Controles de lectura">
           <div class="control-start">
             <button type="button" class="control-button icon-button" id="previousButton" aria-label="Anterior" title="Anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
-            <div class="page-count" id="pageCount" aria-live="polite"><span class="count-primary">Portada</span><span class="count-secondary">Pág. 1 de 15</span></div>
+            <div class="page-count" id="pageCount" aria-live="polite"><span class="count-primary">Portada</span><span class="count-secondary">Pág. 1 de 31</span></div>
             <button type="button" class="control-button icon-button" id="nextButton" aria-label="Siguiente" title="Siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
           </div>
           <div class="control-end">
             <label class="jump-label" for="jumpSelect">Ir a</label>
-            <select id="jumpSelect" aria-label="Ir a una página específica">
-              <option value="1">01 · Portada</option>
-              <option value="2">02 · Tejido</option>
-              <option value="3">03 · Presentación</option>
-              <option value="4">04 · El territorio</option>
-              <option value="5">05 · Mapa de Sokorhpa</option>
-              <option value="6">06 · Guía de lectura</option>
-              <option value="7">07 · Contenido</option>
-              <option value="8">08 · Kosarhi (apertura)</option>
-              <option value="9">09 · Kosarhi (capítulo)</option>
-              <option value="10">10 · Lectura bilingüe</option>
-              <option value="11">11 · Lectura bilingüe</option>
-              <option value="12">12 · Lectura bilingüe</option>
-              <option value="13">13 · Lectura bilingüe</option>
-              <option value="14">14 · Fotografías</option>
-              <option value="15">15 · Fotografías</option>
-            </select>
+            <select id="jumpSelect" aria-label="Ir a una página específica"></select>
             <span class="divider-vertical"></span>
             <button type="button" class="control-button action-button" id="zoomButton" aria-label="Ampliar página actual" title="Ampliar la página">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.7"/><path d="m16 16 5 5M8 10.7h5.4M10.7 8v5.4"/></svg><span>Ampliar</span>
@@ -97,7 +81,7 @@
       <div class="reader-note" id="interactiveNote" role="status" aria-live="polite" hidden></div>
       <div class="navigation-detail">
         <div class="navigation-heading"><span>Explorar páginas</span><span id="readerHelp">Haz clic en los bordes para pasar las hojas · Arrastra la esquina para girarlas · Usa ← →</span></div>
-        <div class="thumbnail-track" id="thumbnailTrack" aria-label="Páginas 1 a 15"></div>
+        <div class="thumbnail-track" id="thumbnailTrack" aria-label="Páginas 1 a 31"></div>
       </div>
       <footer class="site-footer">
         <span>Prototipo editorial para revisión · No constituye edición final autorizada</span>
@@ -121,10 +105,10 @@
 
   <dialog id="resourcesDialog" class="modal resources-modal" aria-label="Archivo visual de imágenes originales">
     <div class="modal-bar">
-      <div><span class="modal-eyebrow">MATERIALES APORTADOS · ZIP ORIGINAL</span><strong>Archivo visual del libro</strong></div>
+      <div><span class="modal-eyebrow">MATERIALES APORTADOS · ZIP ACTUALIZADO</span><strong>Archivo visual del libro</strong></div>
       <button class="modal-tool close-modal" id="resourcesClose" type="button" aria-label="Cerrar archivo visual" title="Cerrar">×</button>
     </div>
-    <p class="resources-description">Doce recursos recibidos para esta maqueta. Las páginas del lector conservan el diseño del PDF; esta selección facilita la revisión de fotografías, mapas e ilustraciones por separado.</p>
+    <p class="resources-description">42 recursos recibidos en el ZIP actualizado. Las páginas del lector conservan el diseño del PDF; esta selección facilita la revisión de fotografías, mapas e ilustraciones por separado.</p>
     <div class="resources-grid" id="resourcesGrid"></div>
     <p class="resources-footnote">La identificación, los créditos y los permisos de publicación deberán validarse en la edición definitiva.</p>
   </dialog>
